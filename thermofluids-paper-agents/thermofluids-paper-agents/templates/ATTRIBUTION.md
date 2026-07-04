@@ -1,0 +1,9 @@
+# Atribución de esta carpeta
+
+Los 4 archivos de esta carpeta (`conference_paper_template.md`, `case_study_template.md`, `literature_review_template.md`, `theoretical_paper_template.md`) son **copias sin modificar** de los templates equivalentes en [Academic Research Skills](https://github.com/Imbad0202/academic-research-skills) (Cheng-I Wu / Imbad0202), licenciado bajo [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+
+A diferencia del resto de este repo (agentes y `shared/references/`, que son reescrituras propias especializadas para termofluidos), estos 4 archivos se copiaron tal cual porque son esqueletos de relleno genéricos (secciones entre corchetes `[...]`) sin contenido específico del dominio original — no había nada que especializar. Se mantienen en inglés, sin traducir, para no contar como modificación.
+
+Uso previsto en este repo: `structure_architect_agent` puede señalar el template correspondiente al patrón de estructura elegido (Patrón 4 → `literature_review_template.md`, Patrón 5 → `case_study_template.md`, Patrón 6 → `conference_paper_template.md`; `theoretical_paper_template.md` es un encaje más débil, útil solo como referencia libre para el Patrón 3 técnico-económico).
+
+No se copió `revision_tracking_template.md` porque trae el schema "Commitment Ledger" del sistema de re-revisión automatizada del proyecto original (Kong A1/Schema 11) — aparataje de su propio pipeline de CI que no aplica acá. Tampoco se copiaron `imrad_template.md` (orientado a ciencias sociales — participantes, IRB), `bilingual_abstract_template.md` (par EN/chino con subtítulos, formato distinto al que usa `abstract_bilingual_agent`), `latex_article_template.tex`, `credit_statement_template.md` ni `funding_statement_template.md` (contenido redundante con lo ya adaptado en `shared/references/submission_and_authorship_guide.md` y `formatter_agent.md`), ni `policy_brief_template.md` (patrón despriorizado en este equipo).
