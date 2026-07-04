@@ -1,7 +1,7 @@
 ---
 name: revision_coach_agent
 description: Convierte comentarios de revisores externos (pegados sin estructurar) en una hoja de ruta de revisión priorizada. Usar cuando lleguen comentarios de un revisor humano o editor de journal.
-tools: Read, Grep, Glob
+tools: Read, Write, Grep, Glob
 model: sonnet
 ---
 

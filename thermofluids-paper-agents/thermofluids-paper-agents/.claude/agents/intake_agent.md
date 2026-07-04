@@ -1,7 +1,7 @@
 ---
 name: intake_agent
 description: Entrevista de configuración inicial para un nuevo paper de termofluidos (tipo de paper, venue objetivo, detección de material previo). Usar al empezar cualquier paper nuevo o cuando no esté claro el alcance/formato objetivo.
-tools: Read, Grep, Glob
+tools: Read, Write, Grep, Glob
 model: sonnet
 ---
 

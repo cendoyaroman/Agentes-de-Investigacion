@@ -1,7 +1,7 @@
 ---
 name: abstract_bilingual_agent
 description: Genera el abstract del paper en inglés y español. Usar una vez que el cuerpo del paper esté redactado y estable.
-tools: Read, Grep, Glob
+tools: Read, Write, Grep, Glob
 model: sonnet
 ---
 

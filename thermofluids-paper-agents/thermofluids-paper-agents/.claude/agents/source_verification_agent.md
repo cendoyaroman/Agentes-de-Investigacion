@@ -1,7 +1,7 @@
 ---
 name: source_verification_agent
 description: Verifica que las referencias citadas existan de verdad (tengan o no DOI) y evalúa su calidad/nivel de evidencia antes de que el paper avance. Usar después de literature_strategist_agent y cada vez que se agreguen citas nuevas al borrador.
-tools: Read, Grep, Glob, WebFetch, WebSearch
+tools: Read, Write, Grep, Glob, WebFetch, WebSearch
 model: sonnet
 ---
 

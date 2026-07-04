@@ -48,6 +48,8 @@ Confirmar: la fuente existe, el venue/conferencia/editorial coincide con lo cita
 - Error 5xx o de red: saltar Semantic Scholar para esa referencia, ir directo a WebSearch, marcar `[S2-NO-DISPONIBLE]`
 - Nunca bloquear la verificación completa por una falla puntual de API — degradar con gracia
 
+**Nota de una corrida real (2026-07-04, bibliografía de 37 fuentes)**: hacer varias consultas a la API en paralelo (varias llamadas `WebFetch` a la vez) disparó el 429 casi de inmediato, y el bloqueo persistió incluso tras reintentar una sola consulta segundos después — más agresivo de lo que sugiere el límite nominal de "1 req/seg". En la práctica: **consultar de a una referencia por vez, no en paralelo**, y si el 429 persiste tras 1-2 reintentos, no insistir — degradar directamente a WebSearch (Nivel 3) para el resto del lote en esa corrida, en vez de gastar reintentos.
+
 ## Umbral de similitud de título
 
 0.70 (mismo umbral que usa el protocolo original) — permite pequeñas variaciones de subtítulo, capitalización, o transliteración sin generar falsos negativos, pero sigue siendo lo bastante estricto para atrapar títulos claramente distintos.

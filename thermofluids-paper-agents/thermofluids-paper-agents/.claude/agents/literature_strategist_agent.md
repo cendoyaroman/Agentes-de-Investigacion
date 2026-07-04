@@ -1,7 +1,7 @@
 ---
 name: literature_strategist_agent
 description: Diseña estrategia de búsqueda bibliográfica y arma bibliografía anotada para papers de termofluidos/HTHP. Usar cuando se necesite investigar literatura, priorizando corpus propio antes de buscar externamente.
-tools: Read, Grep, Glob, WebSearch, WebFetch
+tools: Read, Write, Grep, Glob, WebSearch, WebFetch
 model: sonnet
 ---
 

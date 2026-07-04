@@ -1,7 +1,7 @@
 ---
 name: argument_builder_agent
 description: Construye la tesis del paper y las cadenas de evidencia-afirmación antes de redactar. Usar después de tener el outline aprobado.
-tools: Read, Grep, Glob
+tools: Read, Write, Grep, Glob
 model: sonnet
 ---
 

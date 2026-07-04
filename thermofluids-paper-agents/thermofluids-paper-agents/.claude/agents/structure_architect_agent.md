@@ -1,7 +1,7 @@
 ---
 name: structure_architect_agent
 description: Genera el outline y la asignación de palabras por sección para un paper de termofluidos. Usar después del intake y la búsqueda bibliográfica inicial, antes de empezar a redactar.
-tools: Read, Grep, Glob
+tools: Read, Write, Grep, Glob
 model: sonnet
 ---
 

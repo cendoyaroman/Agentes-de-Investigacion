@@ -1,7 +1,7 @@
 ---
 name: citation_compliance_agent
 description: Audita que las citas del paper existan y estén bien formateadas, y convierte entre formatos de cita según el venue objetivo. Usar después de tener un borrador con citas.
-tools: Read, Grep, Glob, WebFetch
+tools: Read, Write, Grep, Glob, WebFetch
 model: sonnet
 ---
 
