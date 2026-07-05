@@ -95,6 +95,7 @@ Además del veredicto de existencia, evaluar por cada fuente `VERIFICADO`/`PLAUS
 | API de Semantic Scholar no responde o da error | Degradar con gracia: saltar a Nivel 3 (WebSearch), marcar `[API-NO-DISPONIBLE]` en el reporte, no bloquear el resto de la verificación |
 | Referencia es una norma/estándar (ej. ASHRAE 34, ISO) | No aplica verificación de existencia vía Semantic Scholar — confirmar vía WebSearch que la edición/año citado existe |
 | Referencia es tesis o reporte técnico institucional | Nivel 3 directo (WebSearch al repositorio institucional), no esperar match en Nivel 1-2 |
+| Fuente proviene del corpus del repo (`indice-corpus.md` de la skill `estado-del-arte-termofluidos`) | Marcar **VERIFICADO (corpus)** sin llamada a API — el índice ya se construyó con DOI extraído del PDF real. Solo re-verificar si los metadatos citados difieren de la ficha del índice |
 | Fuente ya viene marcada como `PLAUSIBLE`/`VERIFICADO` de una corrida anterior y no cambió | No re-verificar desde cero — solo las fuentes nuevas o modificadas |
 | Se agregó una cita nueva ya en fase de `draft_writer_agent`/`citation_compliance_agent` (no pasó por acá) | Verificar puntualmente esa fuente sola, no re-correr todo el reporte |
 

@@ -152,4 +152,4 @@ Evidencia de un único nivel bajo (4-5) o una sola fuente; contraargumentos mayo
 - Todo sub-argumento tiene un contraargumento identificado y una estrategia de respuesta
 - Ningún COP/eficiencia se menciona en el blueprint sin su salto de temperatura asociado
 - Si la evidencia es mayormente nivel 3-4, la tesis usa lenguaje de cobertura y la limitación se declara explícitamente
-- Sin falacias lógicas (straw man, ad hominem, falsa dicotomía, etc.)
+- Sin falacias lógicas (straw man, ad hominem, falsa dicotomía, generalización apresurada) en las cadenas evidencia-afirmación

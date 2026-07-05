@@ -4,7 +4,7 @@
 
 ## Qué es este proyecto
 
-Equipo de 11 subagentes de Claude Code (formato nativo `.claude/agents/*.md`) especializado en escribir y revisar papers de termofluidos: bombas de calor de alta temperatura (HTHP), secado industrial, ciclos de refrigeración. 10 vienen del pipeline `academic-paper` (12 agentes, Imbad0202/academic-research-skills, quitando `socratic_mentor_agent` y `visualization_agent`); el agente 11 (`source_verification_agent`, verificación de existencia de citas) viene del skill hermano `deep-research` del mismo repo (agregado sesión 6).
+Equipo de 12 subagentes de Claude Code (formato nativo `.claude/agents/*.md`) especializado en escribir y revisar papers de termofluidos: bombas de calor de alta temperatura (HTHP), secado industrial, ciclos de refrigeración. 10 vienen del pipeline `academic-paper` (12 agentes, Imbad0202/academic-research-skills, quitando `socratic_mentor_agent` y `visualization_agent`); el agente 11 (`source_verification_agent`, verificación de existencia de citas) viene del skill hermano `deep-research` del mismo repo (agregado sesión 6). El agente 12 (`visualization_agent`, revisor de figuras/tablas IEEE+dominio) es propio, no adaptado (agregado sesión 7).
 
 ~~Hoy el repo es solo el esqueleto~~ — **ya no**: los 10 agentes y las 7 referencias compartidas tienen contenido especializado real (ver estado abajo). Esta frase se deja tachada como registro de dónde arrancó el proyecto.
 
@@ -46,7 +46,7 @@ Todas en `shared/references/`, **contenido real ya escrito** (sesión 2):
 ## Preguntas abiertas / decisiones que necesitan al usuario
 
 - [ ] ¿Existe carpeta/proyecto `Secado-directo` en otra ubicación, o es un nombre tentativo todavía no creado?
-- [ ] ¿Se quiere crear `hthp-drying-paper-es` como skill nueva, o mantener el fallback de traducción manual dentro de `draft_writer_agent`?
+- [x] ~~¿Se quiere crear `hthp-drying-paper-es` como skill nueva?~~ — Resuelta (sesión 7): la skill ya existe en `.claude/skills/hthp-drying-paper-es/`; `draft_writer_agent` actualizado para invocarla directamente (el fallback `[SIN SKILL ES]` queda solo como caso excepcional).
 
 ## Referencias compartidas — adición sesión 3
 
@@ -113,3 +113,24 @@ Los 11 agentes y las 8 referencias compartidas ya tienen contenido real. Lo que 
 - Conectadas ambas referencias a `intake_agent`, `structure_architect_agent`, `draft_writer_agent`, `citation_compliance_agent`, `peer_reviewer_agent`, `formatter_agent`, `revision_coach_agent`.
 - `formatter_agent` ganó formatos BibTeX, comandos `natbib`, y tabla de problemas comunes de compilación LaTeX.
 - Actualizado `docs/ARCHITECTURE.md` con las 3 referencias nuevas.
+
+
+### 2026-07-05 — sesión 7 (auditoría del equipo + mejoras 1-3 + agente 12)
+- Auditoría completa del repo a pedido del usuario (agentes, skills, referencias, corpus). Se aplicaron las mejoras 1-3 detectadas:
+  1. **`draft_writer_agent` desactualizado**: decía que `hthp-drying-paper-es` "no existe todavía" — la skill ya existe en `.claude/skills/`. Actualizado; el fallback `[SIN SKILL ES]` queda solo para el caso excepcional de entorno sin la skill. Pregunta abierta correspondiente marcada como resuelta.
+  2. **Corpus conectado a los agentes de literatura**: la decisión de sesión 2 ("no se asume corpus propio") quedó obsoleta — ahora existe `Papers/` (45 PDFs) indexado por la skill `estado-del-arte-termofluidos`. `literature_strategist_agent` reescribió su Paso 0: leer `indice-corpus.md` y `taxonomia-temas.md` de la skill ANTES de cualquier búsqueda externa (que queda solo para llenar huecos). `source_verification_agent` ganó el caso borde `VERIFICADO (corpus)`: las fuentes del índice no se re-verifican vía API (el índice ya se construyó con DOI extraído del PDF real).
+  3. **Creado `CLAUDE.md` raíz orquestador**: pipeline de 4 fases con orden de invocación, reglas de orquestación (corpus primero, skills solo desde draft_writer, no inventar cifras, consistencia física bloquea Fase 4, citas preferentes) y tabla de archivos clave. Antes el orden solo vivía en ARCHITECTURE.md, que el agente principal no lee automáticamente.
+- **Agregado agente 12: `visualization_agent`** (propio, no adaptado del original — el del roster original se había excluido). Es *revisor*, no generador (la generación sigue en el flujo Python/matplotlib/CoolProp del usuario). Base normativa: IEEE (anchos 88.9/181.9 mm, 300/600 dpi, texto 8-10 pt final, line art vectorial, captions `Fig. 1.` abajo / `TABLE I` arriba, cita en orden) + convenciones del dominio (P-h con eje log y campana de saturación, coherencia de numeración de estados entre esquema/T-s/P-h/tabla — hallazgo Crítico si no coincide, ejes con magnitud+unidad SI, COP siempre con niveles de T identificables, nomenclatura ASHRAE exacta, barras de incertidumbre en datos experimentales). Con nota de adaptación a venue Elsevier (ATE/IJR) vía `target_venues.md`. Insertado en Fase 4 entre `peer_reviewer_agent` y `formatter_agent`.
+- Actualizados README (12 agentes, estructura con CLAUDE.md y .claude/skills/) y ARCHITECTURE (diagrama, tabla, nota de exclusión/reincorporación).
+- Verificado además en esta sesión: no existe conector MCP relevante (Zotero/Semantic Scholar) en el registro — el protocolo actual vía WebFetch sigue siendo la mejor opción.
+- Pendiente (sin cambios): correr el pipeline completo en un paper real; `examples/` sigue vacío. Mejoras propuestas no aplicadas aún: Bash+CoolProp para `peer_reviewer_agent` (verificación numérica), WebSearch para `citation_compliance_agent`, tiering de modelos (opus para reviewer/argument, haiku para formatter).
+
+### 2026-07-05 — sesión 8 (reparación de corrupción + capacidades + git)
+- **Reparada corrupción silenciosa detectada en re-auditoría**: 11 archivos truncados a mitad de su última oración (6 agentes, `thermofluids_glossary.md`, `target_venues.md` — fila ECM de la tabla —, `referencia-dominio.md` de la skill ES, más `intake_agent.md` y NULs en este archivo reparados en sesión 7). La skill ES se recuperó con la cola exacta de la copia instalada; el resto completando la oración final de forma coherente. Sweep de integridad UTF-8/newline final ahora pasa limpio en todos los .md del repo.
+- **`visualization_agent` integrado en las tablas de colaboración** de `draft_writer_agent` (le entrega figuras/placeholders con spec), `peer_reviewer_agent` (intercambio bidireccional de hallazgos figura-texto) y `formatter_agent` (recibe veredicto por figura + dimensiones para `\includegraphics`).
+- **`peer_reviewer_agent` ganó `Bash` + sección "Verificación numérica del Paso 0 (CoolProp)"**: cota de Carnot, presiones de saturación vía `PropsSI`, cierre de balance de energía y recomputo de Δh contra tabla de estados — con degradación explícita a chequeo cualitativo (`[SIN VERIFICACIÓN NUMÉRICA]`) si CoolProp no está disponible, y script reproducible en el reporte.
+- **`citation_compliance_agent` ganó `WebSearch`** para el screening de retractaciones (además de WebFetch a Retraction Watch).
+- **Corregido `.gitignore`**: no incluía `Papers/` pese a que CLAUDE.md, PROGRESS y la skill estado-del-arte afirmaban que sí — agregado antes del primer commit.
+- **`git init` + primer commit** del repo (hasta ahora no había control de versiones; la corrupción de arriba no habría costado nada con historial).
+- Decisión explícita del usuario: **no** aplicar tiering de modelos (todos los agentes quedan en `model: sonnet`).
+- Pendientes: reinstalar la skill `estado-del-arte-termofluidos` en Claude desde la copia del repo (la instalada está desactualizada — le toca al usuario vía Ajustes > Capacidades); correr el pipeline completo en un paper real (`examples/` sigue vacío).

@@ -49,7 +49,7 @@ Si el venue no está en la tabla: preguntar formato de cita, límite de palabras
 - Detectar el idioma de la conversación con el usuario como default, pero preguntar explícitamente: cuerpo del paper en **inglés / español / bilingüe**.
 - Abstract: bilingüe (default si el venue lo permite) / solo inglés / solo español.
 - Si el cuerpo es en inglés: `draft_writer_agent` invoca la skill `hthp-drying-paper-en`.
-- Si el cuerpo es en español: `draft_writer_agent` usa `hthp-drying-paper-es` si existe, o el fallback documentado en ese agente si no existe todavía.
+- Si el cuerpo es en español: `draft_writer_agent` invoca la skill `hthp-drying-paper-es` (existe en `.claude/skills/` de este repo).
 
 ## Paso 5: word count objetivo
 Auto-sugerir según el Paso 2 y si es journal o conferencia (ver tabla); el usuario puede sobreescribir. Advertir si el objetivo es demasiado corto para el tipo de paper (ej. <3,000 palabras para un paper de ciclo con validación).
@@ -123,4 +123,4 @@ Para `revision`, `format-convert` y `citation-check` se requiere contenido de pa
 - El word count es realista para el tipo de paper
 - El formato de cita coincide con el venue (advertir si hay discrepancia)
 - El usuario confirma explícitamente antes de continuar el pipeline
-- Las anclas de dominio (tipo de contribución, modo de secado, arquitectura de ciclo) quedan explícitas, no implícitas
+- Las anclas de dominio (tipo de contribución, modo de secado, arquitectura de ciclo) quedan explícitas, no implícitas — cualquier ancla inferida y no confirmada por el usuario se marca como supuesto

@@ -232,6 +232,7 @@ Atentamente,
 | `abstract_bilingual_agent` | Abstracts bilingües + keywords |
 | `intake_agent` | Paper Configuration Record (formato de salida, venue, idioma) |
 | `peer_reviewer_agent` | Verdict final (Aceptar) |
+| `visualization_agent` | Veredicto por figura + dimensiones objetivo (ancho de columna/página, dpi) para colocar `\includegraphics` con el ancho correcto |
 
 | Destino | Qué recibe |
 |---|---|

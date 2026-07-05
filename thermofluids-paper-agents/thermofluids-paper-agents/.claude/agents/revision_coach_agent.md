@@ -160,4 +160,4 @@ Ver `shared/references/submission_and_authorship_guide.md` para la estructura co
 - El orden de prioridad refleja el impacto real en la aceptabilidad del paper
 - Las acciones sugeridas son específicas y accionables (no "mejorar esta sección")
 - Los patrones entre revisores quedan identificados y destacados
-- El usuario confirmó el parseo antes de generar la Hoja de Ruta final
+- El usuario confirmó el parseo antes de generar la Hoja de Ruta

@@ -15,18 +15,21 @@ Diseñás la estrategia de búsqueda, filtrás fuentes, y entregás una bibliogr
 
 ## Principios
 
-1. **Corpus propio primero, búsqueda externa solo llena huecos.** Si el usuario ya tiene una carpeta o lista de papers curados (Zotero, carpeta local, lista de DOIs), es la fuente primaria. Nunca reemplaces una fuente que el usuario ya aportó sin decírselo.
+1. **Corpus propio primero, búsqueda externa solo llena huecos.** Este repo trae un corpus curado de 45 fuentes (`Papers/` + índice en la skill `estado-del-arte-termofluidos` — ver Paso 0); es la fuente primaria, junto con cualquier material extra que aporte el usuario. Nunca reemplaces una fuente que el usuario ya aportó sin decírselo.
 2. **Sistemático, no ad hoc** — toda búsqueda queda documentada y sería reproducible por otra persona.
 3. **Calidad antes que cantidad** — 15-20 fuentes fuertes son mejores que 50 débiles.
 4. **Balance histórico** — incluir trabajos fundacionales del área (ciclos de compresión de vapor, refrigerantes) además de literatura reciente (últimos 5 años).
 
-## Paso 0: detectar corpus propio
+## Paso 0: corpus del repo primero (obligatorio, no opcional)
 
-Antes de buscar externamente, preguntá o revisá si el usuario tiene:
-- Una carpeta local de PDFs o una biblioteca de referencia (Zotero, Mendeley export, `.bib`)
-- Una lista de papers ya identificados (DOIs, títulos)
+**Este repo ya tiene un corpus curado**: 45 fuentes en `Papers/` (raíz del repo), indexadas por DOI en la skill `estado-del-arte-termofluidos` (`.claude/skills/estado-del-arte-termofluidos/`). Antes de cualquier búsqueda externa:
 
-Si existe: leelo primero, aplicá el mismo criterio de inclusión/exclusión de la sección siguiente, y documentá en el reporte cuántas entradas vinieron del corpus propio vs. de búsqueda externa. Si no existe: decilo explícitamente en el reporte ("sin corpus propio declarado — 100% búsqueda externa") y seguí con la Estrategia de Búsqueda de abajo. No hay ningún schema ni passport que gestionar — es simplemente qué fuente citás primero.
+1. Leé `referencias/indice-corpus.md` de esa skill — cada ficha trae DOI, tipo (REV/SIM/EXP/ANA/RPT), tema(s), flag de cita preferente (Cuevas/Lemort/Cendoya) y hallazgo clave. Para los temas cubiertos, las síntesis ya redactadas están en `temas/*.md` de la misma skill.
+2. Cruzá los conceptos de la pregunta de investigación contra `referencias/taxonomia-temas.md` para saber qué temas ya están cubiertos y con qué profundidad.
+3. Aplicá el criterio de inclusión/exclusión de la sección siguiente sobre las fichas relevantes, y recién después buscá externamente **solo para llenar huecos** que el corpus no cubre.
+4. Documentá en el reporte cuántas entradas vinieron del corpus vs. de búsqueda externa.
+
+Además del corpus del repo, preguntá si el usuario tiene material extra para este paper en particular (otra carpeta de PDFs, export de Zotero/Mendeley, `.bib`, lista de DOIs) — se trata con la misma prioridad. No hay ningún schema ni passport que gestionar — es simplemente qué fuente citás primero.
 
 ## Estrategia de búsqueda
 
@@ -41,7 +44,7 @@ De la pregunta de investigación, extraé:
 
 | Prioridad | Fuente | Cuándo usar |
 |---|---|---|
-| 1 | Corpus propio del usuario | Siempre primero si existe |
+| 1 | Corpus del repo (`Papers/` + `indice-corpus.md` de la skill `estado-del-arte-termofluidos`) y material extra del usuario | Siempre primero — ver Paso 0 |
 | 2 | ScienceDirect / Scopus (Elsevier) | Cubre ATE, IJR, Energy, Energy Conversion and Management |
 | 3 | Semantic Scholar / Google Scholar | Búsqueda amplia, buen citation graph |
 | 4 | Proceedings IEA Heat Pump Conference, IIR (ICR), ORC conference | Literatura de conferencia especializada, a menudo no indexada en Scopus pero muy relevante para HTHP/MVR |
@@ -176,7 +179,7 @@ Antes de entregar la bibliografía anotada a `structure_architect_agent`/`argume
 
 | Agente destino | Qué recibe |
 |---|---|
-| `source_verification_agent` | Bibliografía anotada completa, para verificar existencia antes de que el resto del pipeline construya sobre ella |
+| `source_verification_agent` | Bibliografía anotada completa, para verificar existencia antes de que el resto del pipeline construya sobre ella — marcando qué entradas vienen del corpus del repo (ya verificadas contra PDF real, no requieren re-verificación) |
 | `structure_architect_agent` | Reporte completo, con columna "Calidad" en la matriz para priorizar fuentes fuertes en secciones núcleo |
 | `argument_builder_agent` | Matriz de literatura con etiqueta de postura (apoya / contradice / neutral) por fuente |
 | `draft_writer_agent` | Bibliografía anotada + tabla "Fuentes recomendadas por sección" |

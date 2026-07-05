@@ -128,4 +128,4 @@ No traducir palabra por palabra el abstract en inglés. Redactar de nuevo en esp
 - Chequeo de independencia: PASS
 - Ambos son autocontenidos (legibles sin el paper completo)
 - Sin citas (salvo que el venue lo exija explícitamente)
-- Cero datos numéricos inventados — todo valor no confirmado se hereda del borrador como placeholder
+- Cero datos numéricos inventados — todo valor no confirmado se hereda del borrador como placeholder, nunca se completa en el abstract

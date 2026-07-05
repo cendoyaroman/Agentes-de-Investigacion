@@ -19,7 +19,7 @@ Antes de escribir una sola oración:
 
 1. Determiná el idioma objetivo del cuerpo del paper (del Paper Configuration Record de `intake_agent`).
 2. Si es **inglés**: invocá la skill `hthp-drying-paper-en` y seguí su esqueleto de paper, reglas de registro/tiempo verbal, convenciones de unidades y KPI, y estilo de citas numérico — están en `references/paper-structure.md`, `references/writing-style.md`, `references/results-presentation.md`, `references/domain-reference.md` de esa skill.
-3. Si es **español**: la skill `hthp-drying-paper-es` es la contraparte esperada, pero **hoy no existe todavía** en este entorno. Si no está disponible: (a) avisá explícitamente al usuario de esta brecha, (b) aplicá las mismas convenciones de `hthp-drying-paper-en` traducidas al registro académico en español (mismo esqueleto de secciones, mismas reglas de citas numéricas y KPIs, tiempos verbales equivalentes), y (c) marcá el borrador con una nota `[SIN SKILL ES — convenciones traducidas manualmente, revisar contra hthp-drying-paper-es cuando exista]`.
+3. Si es **español**: invocá la skill `hthp-drying-paper-es` (existe en `.claude/skills/hthp-drying-paper-es/` de este repo y como skill instalada) — mismo esqueleto, registro y convenciones que la versión EN, en registro académico en español. Solo si por alguna razón no estuviera disponible en el entorno: aplicá las convenciones de `hthp-drying-paper-en` traducidas y marcá el borrador con `[SIN SKILL ES]`.
 4. **No dupliques** el contenido de la skill dentro de este archivo. Si te encontrás repitiendo una regla que ya está en `writing-style.md` o `paper-structure.md`, borrala de acá y referenciá la skill.
 
 Esto reemplaza por completo la sección "Style Profile" / "Style Calibration" del agente original — el estilo del dominio ya está fijado por la skill; no hay necesidad de aprenderlo de muestras de escritura del usuario en cada paper.
@@ -122,7 +122,7 @@ Atender Mayores/Menores restantes; documentar ítems no resueltos como "Limitaci
 |---|---|
 | Argument Blueprint no provisto | Inferir cadena CER del outline; marcar "argumento inferido" |
 | Sección sin fuentes asignadas | Verificar si es una sección de análisis original (modelado propio); si no, usar `[falta literatura]` |
-| Skill `hthp-drying-paper-es` ausente | Aplicar convenciones de `hthp-drying-paper-en` traducidas; marcar `[SIN SKILL ES]` como se describió arriba |
+| Skill `hthp-drying-paper-es` no disponible en el entorno (caso excepcional — ya existe en este repo) | Aplicar convenciones de `hthp-drying-paper-en` traducidas; marcar `[SIN SKILL ES]` como se describió arriba |
 | Dato numérico no confirmado en bibliografía o resultados propios | Placeholder explícito, nunca inventar |
 
 ## Reglas de colaboración
@@ -132,6 +132,7 @@ Atender Mayores/Menores restantes; documentar ítems no resueltos como "Limitaci
 | `citation_compliance_agent` | Borrador completo con citas numéricas consistentes |
 | `abstract_bilingual_agent` | Borrador completo (para extraer los 5 componentes del abstract) |
 | `peer_reviewer_agent` | Borrador completo + metadatos (word count, placeholders pendientes) |
+| `visualization_agent` | Figuras/tablas del borrador, o placeholders con su spec (qué debe mostrar cada figura: ejes, series, anotaciones) |
 | `formatter_agent` | Borrador final revisado (tras verdict de aceptación) |
 
 ## Criterios de calidad

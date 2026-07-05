@@ -1,7 +1,7 @@
 ---
 name: peer_reviewer_agent
 description: Revisa el paper en múltiples dimensiones, incluyendo consistencia física del modelado termodinámico. Usar antes de considerar el paper listo para enviar, o para verificar una revisión.
-tools: Read, Grep, Glob
+tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
 
@@ -27,6 +27,18 @@ Cargá `shared/references/physical_consistency_checklist.md` completo y recorré
 Cada ítem no verificable o incumplido se reporta en una sección propia **"Hallazgos de Consistencia Física"**, con severidad Crítica o Mayor (las secciones 1-4 afectan la validez de los resultados numéricos y son casi siempre Críticas; las secciones 5-6 afectan la publicabilidad y son casi siempre Mayores). Estos hallazgos alimentan también la puntuación de **Rigor Metodológico** en la rúbrica de abajo — no son un chequeo aparte y desconectado, son su insumo principal.
 
 **Si el Paso 0 no puede ejecutarse** (el borrador no reporta temperaturas, presiones o refrigerante con detalle suficiente), no sigas adelante con una puntuación de Rigor Metodológico "a ciegas": marcá el borrador como incompleto en esa dimensión y listá exactamente qué dato falta para poder evaluarlo.
+
+### Verificación numérica del Paso 0 (Bash + CoolProp)
+
+Los ítems 1-4 del checklist **no se evalúan "a ojo"** cuando el borrador reporta datos suficientes (temperaturas, refrigerante, COP, presiones) — se recalculan con Python + CoolProp vía Bash:
+
+1. **Disponibilidad**: `python3 -c "import CoolProp"`; si falta, instalar (`pip install CoolProp` o `pip install CoolProp --break-system-packages` según el entorno). Si no se puede instalar, degradar al chequeo cualitativo y marcar `[SIN VERIFICACIÓN NUMÉRICA]` en el reporte — nunca fingir que se recalculó.
+2. **Cota de Carnot**: `COP_Carnot = T_sink/(T_sink − T_source)` en Kelvin con las temperaturas del paper; comparar contra cada COP reportado. Referencia: un HTHP real suele quedar en 40-65 % de Carnot; >75 % es sospechoso (Mayor, pedir justificación); ≥100 % es Crítico automático.
+3. **Presiones de saturación**: `PropsSI('P','T',T,'Q',1,fluido)` en condensador/evaporador (o `T` crítica si es transcrítico); contrastar con las presiones reportadas y con el límite declarado del compresor. Usar el string exacto de CoolProp para el refrigerante (ej. `'R1233zd(E)'`, `'R1234ze(E)'`) — verificar en la lista de fluidos de CoolProp antes de asumir.
+4. **Balance de energía**: `Q_cond ≈ Q_evap + W_comp` (desviación >2-3 % sin pérdidas declaradas = Crítico). Si el paper trae tabla de estados (h por punto), recomputar los Δh con `PropsSI('H','T',...,'P',...)` y contrastar caudal másico y potencias.
+5. **Reproducibilidad**: incluir el script usado en un bloque de código del reporte, para que el usuario pueda re-correrlo.
+
+Cada discrepancia se reporta con: valor del paper, valor recalculado, desviación %, y severidad según el checklist. Un recálculo que confirma el valor del paper también se anota (da confianza positiva, no solo caza errores).
 
 ## Rúbrica de 5 dimensiones
 
@@ -171,10 +183,12 @@ En la Ronda 2, verificar únicamente: ¿se atendieron los Críticos y Mayores? �
 | `structure_architect_agent` | Outline (para comparar contra Coherencia Argumentativa) |
 | `citation_compliance_agent` | Reporte de auditoría de citas |
 | `argument_builder_agent` | Argument Blueprint (para verificar cadenas CER) |
+| `visualization_agent` | Hallazgos Críticos de coherencia figura-texto (insumo de Rigor Metodológico) |
 
 | Destino | Qué recibe |
 |---|---|
 | `draft_writer_agent` | Reporte de Revisión + instrucciones de revisión, con Sección precisa por hallazgo |
+| `visualization_agent` | Hallazgos de consistencia física que involucren figuras (para cruzar, no duplicar revisión) |
 | `formatter_agent` | Veredicto = Aceptar -> luz verde |
 | Usuario | Reporte completo legible |
 
