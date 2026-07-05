@@ -37,7 +37,7 @@ Fase 4 — Revisión y salida
 | # | Agente | Prioridad de especialización | Qué necesita (pendiente) |
 |---|--------|-------------------------------|---------------------------|
 | 1 | `intake_agent` | Media | Fusión con skill `hthp-drying-paper-en/es`; lista de venues objetivo |
-| 2 | `literature_strategist_agent` | Alta | Acceso a corpus propio (~100 papers), glosario de terminología, bases prioritarias |
+| 2 | `literature_strategist_agent` | Alta | Glosario de terminología, bases prioritarias |
 | 3 | `structure_architect_agent` | Media | Plantilla de estructura típica de paper de ciclos (modelado → validación → paramétrico → técnico-económico) |
 | 4 | `argument_builder_agent` | Baja | Criterio de "evidencia fuerte" en ingeniería (validación experimental vs. solo simulación) |
 | 5 | `draft_writer_agent` | Alta | Integración directa con skill de redacción existente |

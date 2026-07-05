@@ -3,3 +3,8 @@
 *.log
 *.synctex.gz
 __pycache__/
+
+# PDFs con copyright de terceros (Elsevier, Springer, MDPI, Nature, etc.) — nunca commitear.
+# Viven físicamente en Papers/ por conveniencia (ver .claude/skills/estado-del-arte-termofluidos/
+# SKILL.md, sección "Corpus local vs. portable"), pero jamás deben quedar trackeados por git.
+Papers/

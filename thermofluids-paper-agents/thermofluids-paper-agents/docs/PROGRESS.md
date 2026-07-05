@@ -14,7 +14,7 @@ Equipo de 11 subagentes de Claude Code (formato nativo `.claude/agents/*.md`) es
 - El repo padre (`Agentes de Investigacion`) también es un git repo separado; este proyecto aparece ahí como carpeta untracked.
 - **Se clonó el repo original** en `Agentes de Investigacion/academic-research-skills-reference/` (carpeta hermana, fuera de este repo — solo material de referencia local, no se sube a control de versiones de `thermofluids-paper-agents`). Confirmado CC BY-NC 4.0, autor Cheng-I Wu. **Falta agregar nota de atribución al README** (ver Próximos pasos).
 - El repo real está en v3.15 y acumuló mucho aparataje propio de su pipeline (Material Passport/schemas JSON, bloques "Phase Boundary", contratos generador-evaluador, marcadores de cita en comentarios HTML, trust-chain frontmatter, ~100 scripts de lint CI). Decisión tomada: **no portar nada de eso** — se usa cada archivo real como plano de estructura/método, se reescribe en palabras propias, especializado al dominio, y se elimina todo lo que depende de su infraestructura de CI/verificación cruzada que nosotros no tenemos.
-- No se encontró un corpus propio de ~100 papers en el filesystem, ni una carpeta `Secado-directo/`. Sigue pendiente que el usuario indique dónde están (si existen).
+- No se asume corpus propio de papers: el usuario no va a subir uno, no es parte del alcance de los agentes. `literature_strategist_agent` opera 100% con búsqueda externa (Paso 0 sigue detectando si el usuario pega puntualmente una lista corta o DOIs sueltos, pero no se espera ni se depende de una carpeta grande). Sigue pendiente que el usuario indique si existe una carpeta `Secado-directo/` en otra ubicación.
 - La skill `hthp-drying-paper-en` existe y se revisó completa (`~/.claude/skills/hthp-drying-paper-en/SKILL.md` + 4 referencias): ya fija esqueleto de paper, registro/tiempos verbales, unidades SI, citas numéricas `[N]`, KPIs (COP siempre con niveles de temperatura), y regla de no inventar datos. `draft_writer_agent` ahora la invoca en vez de duplicarla. **`hthp-drying-paper-es` no existe** — `draft_writer_agent` documenta el fallback (traducir las convenciones EN) y marca el borrador con `[SIN SKILL ES]` cuando aplica.
 
 ## Prioridades de especialización (de ARCHITECTURE.md, con estado)
@@ -45,7 +45,6 @@ Todas en `shared/references/`, **contenido real ya escrito** (sesión 2):
 
 ## Preguntas abiertas / decisiones que necesitan al usuario
 
-- [ ] ¿Dónde está el corpus propio de ~100 papers (si existe ya) para `literature_strategist_agent`?
 - [ ] ¿Existe carpeta/proyecto `Secado-directo` en otra ubicación, o es un nombre tentativo todavía no creado?
 - [ ] ¿Se quiere crear `hthp-drying-paper-es` como skill nueva, o mantener el fallback de traducción manual dentro de `draft_writer_agent`?
 
@@ -84,7 +83,6 @@ Los 11 agentes y las 8 referencias compartidas ya tienen contenido real. Lo que 
 1. Correr el equipo completo en un paper real o borrador existente del usuario (idealmente uno de los que ya tiene en curso) y ver si el pipeline de 4 fases funciona de punta a punta, incluyendo el nuevo paso de `source_verification_agent`.
 2. Ajustar según fricciones reales — es más probable encontrar huecos usándolo que revisándolo en abstracto.
 3. Decidir si se crea `hthp-drying-paper-es` como skill nueva (hoy `draft_writer_agent` usa un fallback de traducción manual de `hthp-drying-paper-en`).
-4. Si aparece el corpus propio de ~100 papers en algún momento, conectarlo a `literature_strategist_agent` (Paso 0 ya está diseñado para recibirlo).
 
 ## Log de sesiones
 
